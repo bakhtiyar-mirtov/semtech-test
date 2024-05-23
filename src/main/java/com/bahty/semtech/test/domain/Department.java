@@ -1,11 +1,5 @@
 package com.bahty.semtech.test.domain;
 
-import lombok.Data;
+public record Department (String code, String city, long population, String name) {
 
-@Data
-public class Department {
-    String code;
-    String city;
-    long population;
-    String name;
 }

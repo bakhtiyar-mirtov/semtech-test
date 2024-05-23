@@ -32,20 +32,20 @@ public class FileProcessingService {
 
         getDepartmentStream(file)
             .forEach(department -> {
-                DepartmentSummary summary = departments.get(department.getCode());
+                DepartmentSummary summary = departments.get(department.code());
                 if (summary == null) {
                     summary = new DepartmentSummary();
-                    summary.setCode(department.getCode());
-                    summary.setName(department.getName());
-                    summary.setTotalPopulation(department.getPopulation());
-                    summary.setLargestCity(department.getCity());
-                    summary.setLargestCityPopulation(department.getPopulation());
-                    departments.put(department.getCode(), summary);
+                    summary.setCode(department.code());
+                    summary.setName(department.name());
+                    summary.setTotalPopulation(department.population());
+                    summary.setLargestCity(department.city());
+                    summary.setLargestCityPopulation(department.population());
+                    departments.put(department.code(), summary);
                 } else {
-                    summary.setTotalPopulation(summary.getTotalPopulation() + department.getPopulation());
-                    if (department.getPopulation() > summary.getLargestCityPopulation()) {
-                        summary.setLargestCity(department.getCity());
-                        summary.setLargestCityPopulation(department.getPopulation());
+                    summary.setTotalPopulation(summary.getTotalPopulation() + department.population());
+                    if (department.population() > summary.getLargestCityPopulation()) {
+                        summary.setLargestCity(department.city());
+                        summary.setLargestCityPopulation(department.population());
                     }
                 }
             });
@@ -59,8 +59,7 @@ public class FileProcessingService {
         }
 
         Optional<Department> smallestDepartment = getDepartmentStream(file)
-            .min(Comparator.comparingLong(Department::getPopulation));
-        
+            .min(Comparator.comparingLong(Department::population));
 
         return smallestDepartment.orElse(null);
     }
@@ -76,17 +75,9 @@ public class FileProcessingService {
     }
 
     protected static Department processLine (String line) {
-        
         try {
             String[] parts = line.split(";", 4);
-            Department department = new Department();
-
-            department.setCode(parts[0]);
-            department.setCity(parts[1]);   
-            department.setPopulation(Long.parseLong(parts[2]));
-            department.setName(parts[3]);
-
-            return department;
+            return new Department(parts[0], parts[1], Long.parseLong(parts[2]), parts[3]);
         } catch (Exception e) {
             log.error("Error processing line ", e);
             return null;

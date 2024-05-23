@@ -41,7 +41,7 @@ public class Application {
 			
 			Department smallestDepartment = fileProcessingService.getSmallestDepartment(new File(fileName));
 			if (smallestDepartment != null) {
-				System.out.println("Smallest department: " + smallestDepartment.getName());
+				System.out.println("Smallest department: " + smallestDepartment.name());
 			} else {
 				System.out.println("No department found");
 			}

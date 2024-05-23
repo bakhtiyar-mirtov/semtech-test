@@ -77,19 +77,19 @@ public class FileProcessingServiceTest {
     public void testStringProcessingOfStringWithPartialElements () throws URISyntaxException {
         Department department = fileProcessingService.processLine("08;Landrichamps;135;");
         assertNotNull(department);
-        assertEquals("08", department.getCode());
-        assertEquals("Landrichamps", department.getCity());
-        assertEquals(135, department.getPopulation());
-        assertTrue(department.getName().isEmpty());
+        assertEquals("08", department.code());
+        assertEquals("Landrichamps", department.city());
+        assertEquals(135, department.population());
+        assertTrue(department.name().isEmpty());
     }
 
     @Test
     public void testStringProcessingOfValidString () throws URISyntaxException {
         Department department = fileProcessingService.processLine("21;Aubigny-lès-Sombernon;150;COTE-D'OR");
-        assertEquals("21", department.getCode());
-        assertEquals("Aubigny-lès-Sombernon", department.getCity());
-        assertEquals(150, department.getPopulation());
-        assertEquals("COTE-D'OR", department.getName());
+        assertEquals("21", department.code());
+        assertEquals("Aubigny-lès-Sombernon", department.city());
+        assertEquals(150, department.population());
+        assertEquals("COTE-D'OR", department.name());
     }
 
     @Test
@@ -107,7 +107,7 @@ public class FileProcessingServiceTest {
         URL validFileUrl = getClass().getClassLoader().getResource("validFile.csv");
         Department smallestDepartment = fileProcessingService.getSmallestDepartment(new File(validFileUrl.toURI()));
         System.out.println(smallestDepartment);
-        assertEquals("03", smallestDepartment.getCode());
+        assertEquals("03", smallestDepartment.code());
     }
 }
 
